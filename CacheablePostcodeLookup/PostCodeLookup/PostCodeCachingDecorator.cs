@@ -8,7 +8,8 @@ namespace CacheablePostcodeLookup.PostCodeLookup
     public class PostCodeCachingDecorator :IPostCodeLookup
     {
         private readonly DataProvider _dataProvider;
-        private readonly SimpleCache _simpleCache;
+        private  SimpleCache _simpleCache;
+
 
         public PostCodeCachingDecorator(DataProvider dataProvider, SimpleCache simpleCache)
         {
@@ -18,15 +19,19 @@ namespace CacheablePostcodeLookup.PostCodeLookup
 
         public List<Address> Lookup(string postCode)
         {
-            _simpleCache.Set(postCode, _dataProvider, 30);
-            var results = _simpleCache.Get<PostCodeCachingDecorator>(postCode);
+            var data = _simpleCache.Get<string>(postCode);
 
-            return null;
-            //return JsonSerializer.Deserialize<List<Address>>(data);
-
-
-
-
+            if (data != null)
+            {
+                return JsonSerializer.Deserialize<List<Address>>(data);
+            }
+            else
+            {
+                _simpleCache.Set(postCode, _dataProvider.Search(postCode), 30);
+                data = _simpleCache.Get<string>(postCode);
+                return JsonSerializer.Deserialize<List<Address>>(data);
+            }
+      
         }
     }
 }
