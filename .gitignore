@@ -1,0 +1,12 @@
+
+.idea/
+
+.vs/
+
+CacheablePostcodeLookup/bin/
+
+CacheablePostcodeLookup/obj/
+
+CacheablePostcodeLookupTests/bin/
+
+CacheablePostcodeLookupTests/obj/
