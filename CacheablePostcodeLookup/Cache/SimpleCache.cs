@@ -9,13 +9,14 @@ namespace CacheablePostcodeLookup.Cache
 
         public void Set(string name, object data, int cacheTimeInMinutes)
         {
-            var cacheItemPolicy = new CacheItemPolicy {SlidingExpiration = new TimeSpan(0,0,cacheTimeInMinutes)};
+            var cacheItemPolicy = new CacheItemPolicy {SlidingExpiration = new TimeSpan(0,cacheTimeInMinutes,0)};
             _cache.Set(name, data, cacheItemPolicy);
         }
 
         public T Get<T>(string name) where T:class
         {
-            return _cache.Get(name) as T;
+            var x = _cache.Get(name) as T;
+            return x;
         }
     }
 }
