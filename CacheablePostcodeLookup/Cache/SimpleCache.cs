@@ -15,8 +15,7 @@ namespace CacheablePostcodeLookup.Cache
 
         public T Get<T>(string name) where T:class
         {
-            var x = _cache.Get(name) as T;
-            return x;
+            return _cache.Get(name) as T;
         }
     }
 }
