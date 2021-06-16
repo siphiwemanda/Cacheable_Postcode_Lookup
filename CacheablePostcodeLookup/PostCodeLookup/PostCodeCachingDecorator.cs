@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Runtime.Caching;
 using System.Text.Json;
 using CacheablePostcodeLookup.Cache;
 
@@ -19,9 +18,15 @@ namespace CacheablePostcodeLookup.PostCodeLookup
 
         public List<Address> Lookup(string postCode)
         {
-            var data = _simpleCache.Get<string>(postCode);
-            
-            return data == null ? _postCodeLookup.Lookup(postCode) : JsonSerializer.Deserialize<List<Address>>(data);
+            var data = _simpleCache.Get<List<Address>>(postCode);
+            return data ?? GetPostCodes(postCode);
+        }
+
+        private List<Address> GetPostCodes(string postCode)
+        {
+            var getPostCodes = _postCodeLookup.Lookup(postCode);
+            _simpleCache.Set(postCode, getPostCodes, 30);
+            return getPostCodes;
         }
     }
 }
