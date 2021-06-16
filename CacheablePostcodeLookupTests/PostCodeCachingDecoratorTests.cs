@@ -1,6 +1,7 @@
 ﻿using CacheablePostcodeLookup;
 using CacheablePostcodeLookup.Cache;
 using CacheablePostcodeLookup.PostCodeLookup;
+using Moq;
 using NUnit.Framework;
 
 namespace CacheablePostcodeLookupTests
@@ -36,8 +37,10 @@ namespace CacheablePostcodeLookupTests
         public void TestValueIsReturnedFromTheCache()
         {
             var caching = new PostCodeCachingDecorator(new PostcodeLookup(new DataProvider()), new SimpleCache());
-            var results = caching.Lookup("BL00LT");
+            caching.Lookup("BL00LT");
+            
             var cachedResults = caching.Lookup("BL00LT");
+            
             Assert.That(cachedResults.Count, Is.EqualTo(10));
         }
 

@@ -4,7 +4,7 @@ using CacheablePostcodeLookup.Cache;
 
 namespace CacheablePostcodeLookup.PostCodeLookup
 {
-    public class PostCodeCachingDecorator :IPostCodeLookup
+    public class PostCodeCachingDecorator : IPostCodeLookup
     {
         private readonly IPostCodeLookup _postCodeLookup;
         private readonly SimpleCache _simpleCache;
