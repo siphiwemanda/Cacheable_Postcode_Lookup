@@ -1,7 +1,6 @@
-﻿using CacheablePostcodeLookup;
+﻿using System.Collections.Generic;
 using CacheablePostcodeLookup.Cache;
 using CacheablePostcodeLookup.PostCodeLookup;
-using Moq;
 using NUnit.Framework;
 
 namespace CacheablePostcodeLookupTests
@@ -9,12 +8,13 @@ namespace CacheablePostcodeLookupTests
     [TestFixture]
     public class CachedPostCodeLookupTests
     {
+
         [Test]
         public void ReturnIsNotNull()
         {
             var caching = new PostCodeCachingDecorator(new PostcodeLookup(new DataProvider()), new SimpleCache());
             var results = caching.Lookup("BL00LT");
-            Assert.That(results, Is.Not.Null);;
+            Assert.That(results, Is.Not.Null);
    
         }
         [Test]
@@ -36,12 +36,13 @@ namespace CacheablePostcodeLookupTests
         [Test]
         public void TestValueIsReturnedFromTheCache()
         {
-            var caching = new PostCodeCachingDecorator(new PostcodeLookup(new DataProvider()), new SimpleCache());
-            caching.Lookup("BL00LT");
-            
+            var list = new List<Address>() {new Address() {Text = "60 Bolton Road North"}};
+            const string postcode = "BL00LT";
+            var cache = new SimpleCache();
+            cache.Set(postcode, list, 30);
+            var caching = new PostCodeCachingDecorator(new PostcodeLookup(new DataProvider()), cache);
             var cachedResults = caching.Lookup("BL00LT");
-            
-            Assert.That(cachedResults.Count, Is.EqualTo(10));
+            Assert.That(cachedResults.Count, Is.EqualTo(1));
         }
 
     }
