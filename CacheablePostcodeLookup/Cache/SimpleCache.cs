@@ -3,7 +3,7 @@ using System.Runtime.Caching;
 
 namespace CacheablePostcodeLookup.Cache
 {
-    public class SimpleCache
+    public class SimpleCache : ISimpleCache
     {
         private readonly MemoryCache _cache = MemoryCache.Default;
 
