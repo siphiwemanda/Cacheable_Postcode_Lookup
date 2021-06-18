@@ -17,16 +17,16 @@ namespace CacheablePostcodeLookupTests
         [Test]
         public void ReturnAddressesForValidPostCode()
         {
-            var caching = new AddressLookupController();
-            var results = caching.LookupAddress("BL00LT");
+            var addressLookUp = new AddressLookupController();
+            var results = addressLookUp.LookupAddress("BL00LT");
             Assert.That(results.Count, Is.EqualTo(10));
         }
         
         [Test]
         public void ReturnAddressesForInvalidPostCode()
         {
-            var caching = new AddressLookupController();
-            var results = caching.LookupAddress("M147WR");
+            var addressLookUp = new AddressLookupController();
+            var results = addressLookUp.LookupAddress("M147WR");
             Assert.That(results.Count, Is.EqualTo(0));
         }
     }

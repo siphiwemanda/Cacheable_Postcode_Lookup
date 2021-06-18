@@ -52,15 +52,5 @@ namespace CacheablePostcodeLookupTests
             Assert.That(cachedResults.Count, Is.EqualTo(1));
         }
 
-        [Test]
-        public void TestValueIsReturnedFromTheCache2()
-        {
-            var addresses = new List<Address>() { new Address() { Text = "60 Bolton Road North" } };
-            _cacheMock.Setup(p => p.Get<List<Address>>(It.IsAny<string>())).Returns(() => addresses);
-            var caching = new PostCodeCachingDecorator(new PostcodeLookup(new DataProvider()), _cacheMock.Object);
-            var results = caching.Lookup("BL00LT");
-            Assert.That(results.Count, Is.EqualTo(1));
-        }
-
     }
 }
